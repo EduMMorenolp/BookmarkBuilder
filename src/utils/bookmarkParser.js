@@ -37,7 +37,12 @@ ${generateHtml(bookmarks, 1)}
   return content;
 };
 
-// Parsea HTML Netscape a estructura JSON
+// Limpia y normaliza texto
+const cleanText = (text) => {
+  return text ? text.trim().replace(/\s+/g, ' ') : '';
+};
+
+// Parsea HTML Netscape a estructura JSON - Parser completamente reescrito
 export const htmlToJson = (htmlString) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, 'text/html');
@@ -45,55 +50,193 @@ export const htmlToJson = (htmlString) => {
   let idCounter = 0;
   const generateId = () => `item_${idCounter++}`;
   
-  const parseNode = (node) => {
-    const items = [];
-    const children = Array.from(node.children);
+  // Nuevo parser que procesa secuencialmente todos los DT y DL
+  const parseBookmarkHTML = () => {
     
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    // Obtener el primer DL (contenedor raíz)
+    const rootDL = doc.querySelector('DL');
+    if (!rootDL) {
+      console.error('No se encontró DL raíz');
+      return [];
+    }
+    
+    // Función para procesar un contenedor DL
+    const processDL = (dlElement, depth = 0) => {
+      const items = [];
       
-      if (child.tagName === 'DT') {
-        const h3 = child.querySelector('H3');
-        const a = child.querySelector('A');
+      // Obtener todos los hijos directos del DL
+      const children = Array.from(dlElement.children);
+      
+      let i = 0;
+      while (i < children.length) {
+        const child = children[i];
+        
+        if (child.tagName === 'DT') {
+          // Verificar si es carpeta (H3) o enlace (A)
+          const h3 = child.querySelector('H3');
+          const a = child.querySelector('A');
+          
+          if (h3) {
+            // Es una carpeta
+            const folderName = cleanText(h3.textContent);
+            
+            if (folderName) {
+              // Buscar el DL hijo de múltiples formas
+              let childDL = null;
+              
+              // Método 1: Buscar inmediatamente después en el mismo contenedor
+              let j = i + 1;
+              while (j < children.length) {
+                if (children[j].tagName === 'DL') {
+                  childDL = children[j];
+                  break;
+                }
+                if (children[j].tagName === 'DT') {
+                  break;
+                }
+                j++;
+              }
+              
+              // Método 2: Buscar como siguiente elemento hermano del DT
+              if (!childDL) {
+                let nextSibling = child.nextElementSibling;
+                while (nextSibling) {
+                  if (nextSibling.tagName === 'DL') {
+                    childDL = nextSibling;
+                    break;
+                  }
+                  if (nextSibling.tagName === 'DT') {
+                    break;
+                  }
+                  nextSibling = nextSibling.nextElementSibling;
+                }
+              }
+              
+              // Método 3: Buscar DL anidado dentro del mismo DT
+              if (!childDL) {
+                const nestedDL = child.querySelector('DL');
+                if (nestedDL) {
+                  childDL = nestedDL;
+                }
+              }
+              
+              let folderChildren = [];
+              if (childDL) {
+                folderChildren = processDL(childDL, depth + 1);
+                
+                // Si encontramos el DL en el array de children, saltarlo
+                const dlIndex = children.indexOf(childDL);
+                if (dlIndex > i) {
+                  i = dlIndex;
+                }
+              }
+              
+              items.push({
+                id: generateId(),
+                type: 'folder',
+                name: folderName,
+                children: folderChildren
+              });
+            }
+            
+          } else if (a) {
+            // Es un enlace
+            const linkName = cleanText(a.textContent);
+            const linkUrl = cleanText(a.getAttribute('HREF') || '');
+            
+            if (linkName && linkUrl && linkUrl !== '#') {
+              items.push({
+                id: generateId(),
+                type: 'link',
+                name: linkName,
+                url: linkUrl
+              });
+            }
+          }
+        }
+        
+        i++;
+      }
+      
+      return items;
+    };
+    
+    return processDL(rootDL);
+  };
+  
+  // Parser alternativo más agresivo
+  const parseAlternative = () => {
+    const result = [];
+    
+    // Encontrar todos los DT del documento
+    const allDTs = Array.from(doc.querySelectorAll('DT'));
+    
+    // Agrupar DTs por su DL padre
+    const dlGroups = new Map();
+    
+    allDTs.forEach((dt) => {
+      const parentDL = dt.parentElement;
+      if (parentDL && parentDL.tagName === 'DL') {
+        if (!dlGroups.has(parentDL)) {
+          dlGroups.set(parentDL, []);
+        }
+        dlGroups.get(parentDL).push(dt);
+      }
+    });
+    
+    // Procesar cada grupo
+    dlGroups.forEach((dts) => {
+      
+      dts.forEach(dt => {
+        const h3 = dt.querySelector('H3');
+        const a = dt.querySelector('A');
         
         if (h3) {
-          // Es una carpeta
-          const folderName = h3.textContent.trim();
-          const nextSibling = children[i + 1];
-          let folderChildren = [];
-          
-          if (nextSibling && nextSibling.tagName === 'DL') {
-            folderChildren = parseNode(nextSibling);
-            i++; // Saltar el DL ya procesado
+          const folderName = cleanText(h3.textContent);
+          if (folderName) {
+            result.push({
+              id: generateId(),
+              type: 'folder', 
+              name: folderName,
+              children: [] // Por ahora carpetas vacías
+            });
           }
-          
-          items.push({
-            id: generateId(),
-            type: 'folder',
-            name: folderName,
-            children: folderChildren
-          });
         } else if (a) {
-          // Es un enlace
-          items.push({
-            id: generateId(),
-            type: 'link',
-            name: a.textContent.trim(),
-            url: a.getAttribute('HREF') || ''
-          });
+          const linkName = cleanText(a.textContent);
+          const linkUrl = cleanText(a.getAttribute('HREF') || '');
+          
+          if (linkName && linkUrl && linkUrl !== '#') {
+            result.push({
+              id: generateId(),
+              type: 'link',
+              name: linkName,
+              url: linkUrl
+            });
+          }
         }
+      });
+    });
+    
+    return result;
+  };
+  
+  try {
+    let result = parseBookmarkHTML();
+    
+    // Si el resultado es insuficiente, usar método alternativo
+    if (result.length < 5) {
+      const altResult = parseAlternative();
+      if (altResult.length > result.length) {
+        result = altResult;
       }
     }
     
-    return items;
-  };
-  
-  const rootDL = doc.querySelector('DL');
-  if (rootDL) {
-    return parseNode(rootDL);
+    return result;
+    
+  } catch (error) {
+    console.error('Error al parsear marcadores:', error);
+    return [];
   }
-  
-  return [];
 };
 
 // Genera un nombre de archivo con fecha

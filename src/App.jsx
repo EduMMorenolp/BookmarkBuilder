@@ -77,16 +77,31 @@ function App() {
   const handleImport = (htmlContent) => {
     try {
       const parsed = htmlToJson(htmlContent);
+      
       if (parsed.length > 0) {
+        // Contar elementos recursivamente
+        const countElements = (items) => {
+          let count = 0;
+          items.forEach(item => {
+            count++;
+            if (item.type === 'folder' && item.children) {
+              count += countElements(item.children);
+            }
+          });
+          return count;
+        };
+        
+        const totalElements = countElements(parsed);
+        
         setBookmarks(parsed);
         setActiveView('editor');
-        showNotification('Archivo HTML importado correctamente');
+        showNotification(`Archivo importado: ${parsed.length} carpetas principales, ${totalElements} elementos totales`);
       } else {
-        showNotification('No se encontraron marcadores en el archivo', 'error');
+        showNotification('No se encontraron marcadores válidos en el archivo', 'error');
       }
     } catch (e) {
       showNotification('Error al importar el archivo', 'error');
-      console.error('Import error:', e);
+      console.error('Error al importar:', e);
     }
   };
 
