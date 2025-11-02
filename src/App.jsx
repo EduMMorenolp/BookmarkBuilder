@@ -109,6 +109,10 @@ function App() {
     const updatedLists = [...bookmarkLists, newList];
     setBookmarkLists(updatedLists);
     setActiveListId(newList.id);
+    
+    // Limpiar los marcadores globales para evitar que se precarguen desde plantillas anteriores
+    setBookmarks([]);
+    
     showNotification(`Lista "${name}" creada correctamente`);
     // No cambiar de vista automáticamente para que el usuario vea la lista creada
   };
@@ -145,7 +149,23 @@ function App() {
     const list = bookmarkLists.find(l => l.id === listId);
     if (list) {
       const newName = `${list.name} (Copia)`;
-      createNewList(newName, list.bookmarks);
+      const duplicatedBookmarks = deepClone(list.bookmarks);
+      
+      // Crear nueva lista duplicada
+      const newList = {
+        id: `list_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        name: newName,
+        bookmarks: duplicatedBookmarks,
+        created: new Date().toISOString(),
+        lastModified: new Date().toISOString()
+      };
+      
+      const updatedLists = [...bookmarkLists, newList];
+      setBookmarkLists(updatedLists);
+      setActiveListId(newList.id);
+      setBookmarks(duplicatedBookmarks); // Cargar los marcadores duplicados
+      
+      showNotification(`Lista "${newName}" creada correctamente`);
     }
   };
 
@@ -162,9 +182,26 @@ function App() {
 
     // Seleccionar plantilla
   const handleSelectTemplate = (template) => {
-    setBookmarks(deepClone(template.bookmarks));
-    setActiveView('editor');
-    showNotification(`Plantilla "${template.title}" aplicada correctamente`);
+    const templateStructure = deepClone(template.structure);
+    
+    // Crear nueva lista con la plantilla
+    const newList = {
+      id: `list_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      name: template.name,
+      bookmarks: templateStructure,
+      created: new Date().toISOString(),
+      lastModified: new Date().toISOString()
+    };
+    
+    const updatedLists = [...bookmarkLists, newList];
+    setBookmarkLists(updatedLists);
+    setActiveListId(newList.id);
+    
+    // Establecer los marcadores de la plantilla SOLO cuando se crea desde plantilla
+    setBookmarks(templateStructure);
+    
+    showNotification(`Lista "${template.name}" creada desde plantilla`);
+    setActiveView('lists');
   };
 
   // Exportar lista específica

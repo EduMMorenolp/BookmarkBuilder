@@ -61,6 +61,15 @@ function ChatIA({ onApplySuggestion }) {
         <p className="chat-subtitle">Pregúntame sobre marcadores que necesites</p>
       </div>
 
+      {/* Banner de advertencia - Fase de prueba */}
+      <div className="beta-banner">
+        <div className="beta-icon">⚠️</div>
+        <div className="beta-content">
+          <h3>Fase de Prueba</h3>
+          <p>Esta funcionalidad está en desarrollo. No está conectada con un modelo de IA real.</p>
+        </div>
+      </div>
+
       <div className="chat-messages">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.role}`}>

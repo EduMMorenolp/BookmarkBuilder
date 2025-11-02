@@ -593,6 +593,49 @@ body {
   color: var(--text-secondary);
 }
 
+/* Banner de fase de prueba */
+.beta-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.dark .beta-banner {
+  background: #332701;
+  border-color: #664d03;
+}
+
+.beta-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.beta-content h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #856404;
+  margin: 0 0 4px 0;
+}
+
+.dark .beta-content h3 {
+  color: #ffda6a;
+}
+
+.beta-content p {
+  font-size: 14px;
+  color: #856404;
+  margin: 0;
+}
+
+.dark .beta-content p {
+  color: #cdb369;
+}
+
 .chat-messages {
   flex: 1;
   overflow-y: auto;

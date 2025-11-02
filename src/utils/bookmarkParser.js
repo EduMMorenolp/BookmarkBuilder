@@ -261,7 +261,28 @@ export const downloadHtml = (htmlContent, filename) => {
   URL.revokeObjectURL(url);
 };
 
+// Generar ID único
+const generateUniqueId = () => {
+  return `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
+
+// Función para asegurar IDs únicos en una estructura
+const ensureUniqueIds = (items) => {
+  return items.map(item => {
+    const newItem = { ...item, id: generateUniqueId() };
+    if (newItem.children && Array.isArray(newItem.children)) {
+      newItem.children = ensureUniqueIds(newItem.children);
+    }
+    return newItem;
+  });
+};
+
 // Clona estructura profunda (evita mutaciones)
 export const deepClone = (obj) => {
-  return JSON.parse(JSON.stringify(obj));
+  if (obj === null || obj === undefined) {
+    return [];
+  }
+  const cloned = JSON.parse(JSON.stringify(obj));
+  // Asegurar que todos los IDs sean únicos
+  return ensureUniqueIds(cloned);
 };
