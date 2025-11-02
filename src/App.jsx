@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import TemplateSelector from './components/TemplateSelector';
 import Editor from './components/Editor';
 import ChatIA from './components/ChatIA';
+import BookmarkListManager from './components/BookmarkListManager';
 import { jsonToHtml, htmlToJson, generateFilename, downloadHtml, deepClone } from './utils/bookmarkParser';
 import './App.css';
 
@@ -11,17 +12,41 @@ function App() {
   const [bookmarks, setBookmarks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [notification, setNotification] = useState(null);
+  
+  // Sistema de múltiples listas de marcadores
+  const [bookmarkLists, setBookmarkLists] = useState([]);
+  const [activeListId, setActiveListId] = useState(null);
 
   // Cargar estado desde localStorage
   useEffect(() => {
     const savedBookmarks = localStorage.getItem('bookmarks');
     const savedDarkMode = localStorage.getItem('darkMode');
+    const savedBookmarkLists = localStorage.getItem('bookmarkLists');
+    const savedActiveListId = localStorage.getItem('activeListId');
     
     if (savedBookmarks) {
       try {
         setBookmarks(JSON.parse(savedBookmarks));
       } catch (e) {
         console.error('Error loading bookmarks:', e);
+      }
+    }
+    
+    if (savedBookmarkLists) {
+      try {
+        const lists = JSON.parse(savedBookmarkLists);
+        setBookmarkLists(lists);
+        
+        // Si hay listas y un ID activo, cargar esa lista
+        if (savedActiveListId && lists.length > 0) {
+          const activeList = lists.find(list => list.id === savedActiveListId);
+          if (activeList) {
+            setActiveListId(savedActiveListId);
+            setBookmarks(activeList.bookmarks);
+          }
+        }
+      } catch (e) {
+        console.error('Error loading bookmark lists:', e);
       }
     }
     
@@ -33,7 +58,32 @@ function App() {
   // Guardar en localStorage
   useEffect(() => {
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-  }, [bookmarks]);
+    
+    // Si hay una lista activa, actualizar sus marcadores
+    if (activeListId) {
+      setBookmarkLists(prevLists => {
+        if (prevLists.length === 0) return prevLists;
+        
+        const updatedLists = prevLists.map(list => 
+          list.id === activeListId 
+            ? { ...list, bookmarks: bookmarks, lastModified: new Date().toISOString() }
+            : list
+        );
+        localStorage.setItem('bookmarkLists', JSON.stringify(updatedLists));
+        return updatedLists;
+      });
+    }
+  }, [bookmarks, activeListId]);
+
+  useEffect(() => {
+    localStorage.setItem('bookmarkLists', JSON.stringify(bookmarkLists));
+  }, [bookmarkLists]);
+
+  useEffect(() => {
+    if (activeListId) {
+      localStorage.setItem('activeListId', activeListId);
+    }
+  }, [activeListId]);
 
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode.toString());
@@ -46,11 +96,83 @@ function App() {
     setTimeout(() => setNotification(null), 3000);
   };
 
-  // Seleccionar plantilla
+  // Crear nueva lista de marcadores
+  const createNewList = (name, fromTemplate = null) => {
+    const newList = {
+      id: `list_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      name: name,
+      bookmarks: fromTemplate ? deepClone(fromTemplate) : [],
+      created: new Date().toISOString(),
+      lastModified: new Date().toISOString()
+    };
+    
+    const updatedLists = [...bookmarkLists, newList];
+    setBookmarkLists(updatedLists);
+    setActiveListId(newList.id);
+    showNotification(`Lista "${name}" creada correctamente`);
+    // No cambiar de vista automáticamente para que el usuario vea la lista creada
+  };
+
+  // Cargar lista existente
+  const loadList = (listId) => {
+    const list = bookmarkLists.find(l => l.id === listId);
+    if (list) {
+      setActiveListId(listId);
+      setBookmarks(list.bookmarks);
+      setActiveView('editor');
+      showNotification(`Lista "${list.name}" cargada`);
+    }
+  };
+
+  // Eliminar lista
+  const deleteList = (listId) => {
+    const list = bookmarkLists.find(l => l.id === listId);
+    if (list && window.confirm(`¿Estás seguro de que quieres eliminar la lista "${list.name}"?`)) {
+      const updatedLists = bookmarkLists.filter(l => l.id !== listId);
+      setBookmarkLists(updatedLists);
+      
+      if (activeListId === listId) {
+        setActiveListId(null);
+        setBookmarks([]);
+      }
+      
+      showNotification(`Lista "${list.name}" eliminada`);
+    }
+  };
+
+  // Duplicar lista
+  const duplicateList = (listId) => {
+    const list = bookmarkLists.find(l => l.id === listId);
+    if (list) {
+      const newName = `${list.name} (Copia)`;
+      createNewList(newName, list.bookmarks);
+    }
+  };
+
+  // Renombrar lista
+  const renameList = (listId, newName) => {
+    const updatedLists = bookmarkLists.map(list => 
+      list.id === listId 
+        ? { ...list, name: newName, lastModified: new Date().toISOString() }
+        : list
+    );
+    setBookmarkLists(updatedLists);
+    showNotification('Lista renombrada correctamente');
+  };
+
+    // Seleccionar plantilla
   const handleSelectTemplate = (template) => {
-    setBookmarks(deepClone(template.structure));
+    setBookmarks(deepClone(template.bookmarks));
     setActiveView('editor');
-    showNotification(`Plantilla "${template.name}" cargada correctamente`);
+    showNotification(`Plantilla "${template.title}" aplicada correctamente`);
+  };
+
+  // Exportar lista específica
+  const handleExportList = (list) => {
+    const html = jsonToHtml(list.bookmarks, `🚀 ${list.name}`);
+    const filename = `${list.name.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}.html`;
+    downloadHtml(html, filename);
+    showNotification(`Lista "${list.name}" exportada correctamente`);
   };
 
   // Aplicar sugerencia de IA
@@ -127,6 +249,31 @@ function App() {
         
         {activeView === 'editor' && (
           <Editor bookmarks={bookmarks} setBookmarks={setBookmarks} />
+        )}
+        
+        {activeView === 'lists' && (
+          <BookmarkListManager
+            bookmarkLists={bookmarkLists}
+            activeListId={activeListId}
+            onCreateList={createNewList}
+            onLoadList={loadList}
+            onDeleteList={deleteList}
+            onDuplicateList={duplicateList}
+            onRenameList={renameList}
+            onExportList={handleExportList}
+            currentBookmarks={bookmarks}
+            onSaveCurrentList={() => {
+              if (activeListId && bookmarkLists.length > 0) {
+                const updatedLists = bookmarkLists.map(list => 
+                  list.id === activeListId 
+                    ? { ...list, bookmarks: bookmarks, lastModified: new Date().toISOString() }
+                    : list
+                );
+                setBookmarkLists(updatedLists);
+                showNotification('Lista guardada correctamente');
+              }
+            }}
+          />
         )}
         
         {activeView === 'chat' && (

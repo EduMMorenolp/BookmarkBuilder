@@ -5,6 +5,36 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.0.1] - 2025-11-02
+
+### ✨ Añadido
+- **Sistema de Múltiples Listas de Marcadores**
+  - Componente `BookmarkListManager` para gestionar colecciones de marcadores
+  - Creación, eliminación, duplicación y renombrado de listas
+  - Navegación entre diferentes listas desde el sidebar ("Mis Listas")
+  - Persistencia de múltiples listas en localStorage
+  - Interfaz visual con tarjetas para cada lista
+  - Estado activo visual para la lista seleccionada
+
+### 🔧 Arreglado
+- **Parser de Marcadores HTML Mejorado**
+  - Reescrito completamente el algoritmo de parsing en `bookmarkParser.js`
+  - Soporte para múltiples métodos de búsqueda de elementos DL anidados
+  - Manejo robusto de estructuras complejas de marcadores de diferentes navegadores
+  - Solución a problema donde solo se importaban 7 elementos de archivos grandes
+  - Mejor manejo de espacios en blanco y caracteres especiales en nombres
+
+### 🧹 Limpieza
+- Eliminación de todos los `console.log` de debugging
+- Optimización de efectos React para prevenir bucles infinitos
+- Mejora en la gestión de estado para múltiples listas
+
+### 🎨 Interfaz
+- Nuevo icono y color naranja para "Mis Listas" en el sidebar
+- Botones de acción visibles en tarjetas de lista (70% opacidad por defecto)
+- Efectos hover mejorados en elementos interactivos
+- Grid responsivo para visualización de múltiples listas
+
 ## [1.0.0] - 2025-11-02
 
 ### 🎉 Lanzamiento Inicial

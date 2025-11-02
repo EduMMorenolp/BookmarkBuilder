@@ -1,4 +1,4 @@
-import { FolderOpen, Layout, MessageSquare, Download, Moon, Sun, FileUp } from 'lucide-react';
+import { FolderOpen, Layout, MessageSquare, Download, Moon, Sun, FileUp, List } from 'lucide-react';
 
 function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, toggleDarkMode }) {
   const handleImport = () => {
@@ -21,6 +21,7 @@ function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, togg
   const menuItems = [
     { id: 'templates', icon: <Layout size={20} />, label: 'Plantillas', color: 'blue' },
     { id: 'editor', icon: <FolderOpen size={20} />, label: 'Mis Marcadores', color: 'green' },
+    { id: 'lists', icon: <List size={20} />, label: 'Mis Listas', color: 'orange' },
     { id: 'chat', icon: <MessageSquare size={20} />, label: 'Chat IA', color: 'purple' },
   ];
 
