@@ -6,6 +6,10 @@
 ![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=flat&logo=vite)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat&logo=javascript)
 
+## 🚀 Demo en Vivo
+
+**[Ver Demo](https://tu-usuario.github.io/BookmarkBuilder/)**
+
 ## 🎯 Características
 
 ### ✨ Funcionalidades Principales
@@ -174,7 +178,33 @@ npm run preview
 
 Los archivos se generarán en la carpeta `dist/`.
 
-## 🔮 Futuras Mejoras
+## � Deploy con GitHub Pages
+
+Este proyecto está configurado para deploy automático con GitHub Pages mediante GitHub Actions.
+
+### Configuración de GitHub Pages
+
+1. Ve a la configuración de tu repositorio en GitHub
+2. En la sección "Pages", selecciona:
+   - **Source**: GitHub Actions
+3. El deploy se ejecutará automáticamente con cada push a main/master
+
+### Deploy Manual
+
+También puedes hacer deploy manual:
+
+```bash
+npm run build
+```
+
+Luego sube la carpeta `dist` a tu servidor web.
+
+### URL del Proyecto
+
+Una vez configurado, tu proyecto estará disponible en:
+`https://tu-usuario.github.io/BookmarkBuilder/`
+
+## �🔮 Futuras Mejoras
 
 - [ ] Drag & drop para reordenar elementos
 - [ ] Exportación a otros formatos (JSON, CSV)
