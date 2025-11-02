@@ -14,7 +14,13 @@
 
 ### ✨ Funcionalidades Principales
 
-- **📁 Plantillas Predefinidas**: 6 plantillas profesionales listas para usar
+- **� Sistema de Múltiples Listas**
+  - Crea y gestiona múltiples colecciones de marcadores
+  - Duplica, renombra y elimina listas fácilmente
+  - Navegación intuitiva entre diferentes proyectos
+  - Persistencia automática de todas tus listas
+
+- **�📁 Plantillas Predefinidas**: 6 plantillas profesionales listas para usar
   - 🚀 Full Stack Developer
   - 🎨 Frontend Developer
   - ⚙️ Backend Developer
@@ -27,28 +33,32 @@
   - Añadir, editar y eliminar enlaces
   - Vista en árbol expandible
   - Edición inline con previsualización
+  - IDs únicos automáticos para evitar conflictos
 
-- **💬 Chat IA Integrado**
+- **💬 Chat IA Integrado** *(En desarrollo)*
   - Asistente inteligente para sugerencias
   - Respuestas contextuales según tus necesidades
-  - Aplicación automática de sugerencias
+  - Banner informativo de estado de desarrollo
   - Búsqueda por keywords (React, Firebase, Testing, etc.)
 
-- **📤 Exportación e Importación**
-  - Exporta en formato HTML estándar Netscape
-  - Compatible con Chrome, Firefox, Edge
-  - Importa archivos HTML existentes
+- **📤 Exportación e Importación Mejorada**
+  - Parser HTML robusto con soporte para estructuras complejas
+  - Compatible con Chrome, Firefox, Edge, Safari
+  - Importa archivos HTML grandes sin pérdida de datos
+  - Exportación individual de listas específicas
   - Generación automática de nombres de archivo
 
 - **🎨 Personalización**
-  - Modo claro/oscuro
+  - Modo claro/oscuro con persistencia
   - Interfaz moderna y responsive
-  - Animaciones suaves
+  - Animaciones suaves y efectos hover
   - Notificaciones en tiempo real
+  - Botones de acción siempre visibles
 
-- **💾 Persistencia Local**
-  - Auto-guardado en localStorage
+- **💾 Persistencia Local Avanzada**
+  - Auto-guardado inteligente sin bucles infinitos
   - Recuperación automática al recargar
+  - Gestión optimizada de estado React
   - Sin necesidad de backend
 
 ## 🚀 Inicio Rápido
@@ -72,9 +82,9 @@ La aplicación estará disponible en `http://localhost:5173`
 
 ## 📖 Uso
 
-### 1. Seleccionar una Plantilla
+### 1. Crear Lista desde Plantilla
 
-Ve a la sección **Plantillas** y selecciona una plantilla predefinida según tu área:
+Ve a la sección **Plantillas** y selecciona una plantilla predefinida:
 
 - **Full Stack**: Para desarrolladores que trabajan en frontend y backend
 - **Frontend**: React, Vue, Angular, CSS frameworks
@@ -83,7 +93,22 @@ Ve a la sección **Plantillas** y selecciona una plantilla predefinida según tu
 - **AI**: LLMs, ML frameworks, plataformas de IA
 - **Design**: Figma, recursos de diseño, accesibilidad
 
-### 2. Editar Marcadores
+Al hacer clic en "Usar plantilla", automáticamente:
+- Se crea una nueva lista con el contenido de la plantilla
+- Te redirige a **Mis Listas** para gestionar la nueva colección
+- La lista queda lista para editar y personalizar
+
+### 2. Gestionar Múltiples Listas
+
+En **Mis Listas**:
+
+- **Crear nueva**: Lista vacía para empezar desde cero
+- **Duplicar**: Copia una lista existente con todo su contenido
+- **Renombrar**: Cambiar el nombre de tus listas
+- **Eliminar**: Borrar listas que ya no necesites
+- **Cargar**: Abrir una lista específica en el editor
+
+### 3. Editar Marcadores
 
 En **Mis Marcadores**:
 
@@ -92,8 +117,11 @@ En **Mis Marcadores**:
 - **Editar**: Haz clic en el ícono de lápiz para modificar
 - **Eliminar**: Usa el ícono de papelera para borrar
 - **Expandir/Contraer**: Navega por la estructura jerárquica
+- **Auto-guardado**: Los cambios se guardan automáticamente
 
-### 3. Chat IA
+### 4. Chat IA *(En desarrollo)*
+
+**⚠️ Nota**: Esta funcionalidad está en fase de prueba y no está conectada con un modelo de IA real.
 
 Pide recomendaciones al asistente:
 
@@ -103,9 +131,25 @@ Pide recomendaciones al asistente:
 "Quiero marcadores de diseño UI/UX"
 ```
 
-El IA sugerirá marcadores relevantes que puedes aplicar con un clic.
+El simulador de IA sugerirá marcadores relevantes que puedes aplicar con un clic.
 
-### 4. Exportar
+### 5. Exportar e Importar
+
+**Exportar:**
+1. Ve a **Mis Listas** y selecciona una lista
+2. Haz clic en el botón de descarga en la tarjeta de la lista
+3. El archivo HTML se descargará automáticamente
+
+**Importar:**
+1. Haz clic en **Importar HTML** en el sidebar
+2. Selecciona tu archivo HTML de marcadores
+3. Los marcadores se cargarán automáticamente en el editor
+4. Guárdalos como una nueva lista si deseas
+
+**Usar en navegadores:**
+- Chrome: `chrome://bookmarks` → Menú → Importar marcadores
+- Firefox: Marcadores → Mostrar todos → Importar y respaldar → Importar
+- Edge: Configuración → Perfiles → Importar datos del explorador
 
 Cuando termines:
 
@@ -121,21 +165,26 @@ Cuando termines:
 BookmarkBuilder/
 ├── src/
 │   ├── components/
-│   │   ├── Sidebar.jsx          # Barra lateral con navegación
-│   │   ├── TemplateSelector.jsx # Selector de plantillas
-│   │   ├── Editor.jsx           # Editor principal de marcadores
-│   │   ├── FolderItem.jsx       # Componente de carpeta/enlace
-│   │   └── ChatIA.jsx           # Chat con asistente IA
+│   │   ├── Sidebar.jsx              # Barra lateral con navegación
+│   │   ├── TemplateSelector.jsx     # Selector de plantillas
+│   │   ├── Editor.jsx               # Editor principal de marcadores
+│   │   ├── FolderItem.jsx           # Componente de carpeta/enlace
+│   │   ├── ChatIA.jsx               # Chat con asistente IA
+│   │   └── BookmarkListManager.jsx  # Gestión de múltiples listas
 │   ├── utils/
-│   │   ├── templates.js         # Plantillas predefinidas
-│   │   ├── bookmarkParser.js    # Conversión JSON ↔ HTML
-│   │   └── aiHelper.js          # Lógica del asistente IA
-│   ├── App.jsx                  # Componente principal
-│   ├── App.css                  # Estilos principales
-│   ├── index.css                # Estilos globales
-│   └── main.jsx                 # Entry point
+│   │   ├── templates.js             # Plantillas predefinidas
+│   │   ├── bookmarkParser.js        # Conversión JSON ↔ HTML mejorada
+│   │   └── aiHelper.js              # Lógica del asistente IA
+│   ├── App.jsx                      # Componente principal con gestión de estado
+│   ├── App.css                      # Estilos principales y componentes
+│   ├── index.css                    # Estilos globales
+│   └── main.jsx                     # Entry point
 ├── public/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml               # GitHub Actions para deploy
 ├── package.json
+├── CHANGELOG.md                     # Registro de cambios
 └── README.md
 ```
 
@@ -204,18 +253,30 @@ Luego sube la carpeta `dist` a tu servidor web.
 Una vez configurado, tu proyecto estará disponible en:
 `https://tu-usuario.github.io/BookmarkBuilder/`
 
-## �🔮 Futuras Mejoras
+##  Futuras Mejoras
 
+### ✅ Implementado en v1.0.1
+- [x] **Múltiples listas de marcadores**: Sistema completo de gestión de colecciones
+- [x] **Parser HTML mejorado**: Soporte robusto para importación de estructuras complejas
+- [x] **Gestión de estado optimizada**: Eliminación de bucles infinitos y mejoras de rendimiento
+- [x] **Integración plantillas-listas**: Flujo mejorado desde plantillas hasta listas editables
+
+### 🚧 En Desarrollo
+- [ ] Conexión real con API de OpenAI para Chat IA
 - [ ] Drag & drop para reordenar elementos
-- [ ] Exportación a otros formatos (JSON, CSV)
-- [ ] Sincronización con servicios cloud
+- [ ] Búsqueda y filtrado dentro de listas
+
+### 🔮 Planificado
+- [ ] Exportación a otros formatos (JSON, CSV, Markdown)
+- [ ] Sincronización con servicios cloud (Firebase/Supabase)
 - [ ] Colaboración en tiempo real
-- [ ] Integración con API de OpenAI real
 - [ ] PWA para uso offline
-- [ ] Extensión de navegador
-- [ ] Compartir vía URL
-- [ ] Múltiples proyectos guardados
-- [ ] Búsqueda y filtrado avanzado
+- [ ] Extensión de navegador (Chrome/Firefox)
+- [ ] Compartir listas vía URL
+- [ ] Importación desde servicios (Pocket, Raindrop.io)
+- [ ] Temas personalizables
+- [ ] Atajos de teclado
+- [ ] Tutorial interactivo
 
 ## 📝 Licencia
 

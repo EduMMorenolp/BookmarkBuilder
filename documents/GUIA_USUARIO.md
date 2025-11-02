@@ -4,12 +4,13 @@
 
 1. [Introducción](#introducción)
 2. [Interfaz de Usuario](#interfaz-de-usuario)
-3. [Uso de Plantillas](#uso-de-plantillas)
-4. [Editor de Marcadores](#editor-de-marcadores)
-5. [Chat IA](#chat-ia)
-6. [Exportar e Importar](#exportar-e-importar)
-7. [Tips y Trucos](#tips-y-trucos)
-8. [Solución de Problemas](#solución-de-problemas)
+3. [Gestión de Listas](#gestión-de-listas)
+4. [Uso de Plantillas](#uso-de-plantillas)
+5. [Editor de Marcadores](#editor-de-marcadores)
+6. [Chat IA](#chat-ia)
+7. [Exportar e Importar](#exportar-e-importar)
+8. [Tips y Trucos](#tips-y-trucos)
+9. [Solución de Problemas](#solución-de-problemas)
 
 ---
 
@@ -36,12 +37,75 @@ La barra lateral izquierda contiene:
 #### Navegación Principal
 - **📋 Plantillas**: Selecciona plantillas predefinidas
 - **📁 Mis Marcadores**: Editor visual de tu estructura
-- **💬 Chat IA**: Asistente inteligente para sugerencias
+- **� Mis Listas**: Gestiona múltiples colecciones de marcadores
+- **�💬 Chat IA**: Asistente inteligente para sugerencias *(En desarrollo)*
 
 #### Acciones
 - **📤 Importar HTML**: Carga un archivo de marcadores existente
 - **⬇️ Exportar HTML**: Descarga tus marcadores
 - **🌓 Modo Oscuro/Claro**: Cambia el tema visual
+
+---
+
+## Gestión de Listas
+
+**Mis Listas** es la funcionalidad central de BookmarkBuilder que te permite crear y gestionar múltiples colecciones de marcadores.
+
+### ¿Qué son las Listas?
+
+Las listas son colecciones independientes de marcadores que puedes crear, organizar y gestionar por separado. Cada lista puede tener:
+
+- **Nombre personalizado**: "Proyecto React", "Herramientas de Diseño", etc.
+- **Contenido único**: Marcadores específicos para cada propósito
+- **Gestión independiente**: Editar, duplicar, renombrar o eliminar por separado
+
+### Crear una Nueva Lista
+
+#### Opción 1: Lista Vacía
+1. Ve a **Mis Listas**
+2. Haz clic en **"+ Crear Nueva Lista"**
+3. Escribe un nombre descriptivo
+4. Haz clic en **"Crear"**
+5. La lista se creará vacía y lista para editar
+
+#### Opción 2: Desde Plantilla
+1. Ve a **Plantillas**
+2. Selecciona la plantilla que necesites
+3. Haz clic en **"Usar esta plantilla"**
+4. Automáticamente se creará una nueva lista con el contenido de la plantilla
+5. Serás redirigido a **Mis Listas** para ver la nueva colección
+
+### Gestionar Listas Existentes
+
+Cada lista tiene botones de acción que aparecen al pasar el ratón:
+
+#### 📝 **Cargar Lista**
+- Haz clic en el **nombre de la lista** para abrirla en el editor
+- Los marcadores se cargarán en **Mis Marcadores** para editar
+
+#### 📋 **Duplicar Lista**
+- Crea una copia exacta con el nombre "(Copia)"
+- Útil para crear variaciones o respaldos
+
+#### ✏️ **Renombrar Lista**
+- Haz clic en el ícono de lápiz
+- Escribe el nuevo nombre y presiona Enter
+
+#### 🗑️ **Eliminar Lista**
+- Haz clic en el ícono de papelera
+- Confirma la eliminación (acción irreversible)
+
+#### 📤 **Exportar Lista**
+- Haz clic en el ícono de descarga
+- Descarga solo esa lista como archivo HTML
+
+### Flujo de Trabajo Recomendado
+
+1. **Planifica tus listas**: "Trabajo", "Personal", "Aprendizaje", etc.
+2. **Usa plantillas como base**: Comienza con estructuras predefinidas
+3. **Personaliza cada lista**: Añade/quita marcadores según necesites
+4. **Mantén organizadas**: Renombra y elimina listas obsoletas
+5. **Haz respaldos**: Duplica listas importantes antes de cambios grandes
 
 ---
 
@@ -105,11 +169,22 @@ Incluye recursos para:
 
 ### Cómo Usar una Plantilla
 
+**Flujo Actualizado (v1.0.1)**:
+
 1. Ve a la sección **Plantillas**
 2. Revisa las opciones disponibles
 3. Haz clic en **"Usar esta plantilla"**
-4. La plantilla se cargará automáticamente en el editor
-5. ¡Personaliza según tus necesidades!
+4. **Automáticamente se crea una nueva lista** con el contenido de la plantilla
+5. **Serás redirigido a "Mis Listas"** para ver la nueva colección
+6. **Haz clic en el nombre de la lista** para abrirla en el editor
+7. ¡Personaliza según tus necesidades!
+
+### Ventajas del Nuevo Flujo
+
+- **🎯 Organización**: Cada plantilla se convierte en una lista independiente
+- **🔄 Reutilizable**: Puedes usar la misma plantilla múltiples veces
+- **📊 Gestión**: Todas tus listas están organizadas en un solo lugar
+- **🚀 Productividad**: Comienza rápidamente con estructuras profesionales
 
 ---
 
@@ -177,11 +252,19 @@ Los marcadores se organizan en una estructura de árbol:
 
 ---
 
-## Chat IA
+## Chat IA *(En Desarrollo)*
 
-### ¿Cómo Funciona?
+### ⚠️ Estado Actual
 
-El Chat IA es un asistente inteligente que analiza tus peticiones y sugiere marcadores relevantes.
+**Importante**: Esta funcionalidad está en fase de prueba y **NO está conectada con un modelo de IA real**. 
+
+Cuando accedas al Chat IA verás un banner amarillo que indica:
+- "**Fase de Prueba**"
+- "Esta funcionalidad está en desarrollo. No está conectada con un modelo de IA real."
+
+### ¿Cómo Funciona Actualmente?
+
+El Chat IA actual es un **simulador** que analiza palabras clave en tus peticiones y sugiere marcadores predefinidos relevantes.
 
 ### Ejemplos de Consultas
 
@@ -235,10 +318,17 @@ Usa los botones de sugerencias rápidas para consultas comunes:
 
 ### Exportar Marcadores
 
-#### Proceso
-1. Asegúrate de tener marcadores en el editor
+#### Opción 1: Exportar Lista Específica *(Recomendado)*
+1. Ve a **"Mis Listas"**
+2. Localiza la lista que quieres exportar
+3. Haz clic en el **ícono de descarga** (📤) en la tarjeta de la lista
+4. Se descargará un archivo `.html` con el nombre de la lista
+5. El archivo contiene solo esa lista específica
+
+#### Opción 2: Exportar desde Editor
+1. Carga una lista en **"Mis Marcadores"**
 2. Haz clic en **"Exportar HTML"** en la barra lateral
-3. Se descargará un archivo `.html` automáticamente
+3. Se descargará un archivo `.html` con los marcadores actuales
 4. El nombre será `mis_marcadores_YYYY-MM-DD.html`
 
 #### Formato del Archivo
@@ -271,12 +361,20 @@ El archivo generado sigue el estándar **Netscape Bookmark File Format**, compat
 
 ### Importar HTML a BookmarkBuilder
 
-#### Proceso
+#### Proceso Mejorado *(v1.0.1)*
 1. Haz clic en **"Importar HTML"** en la barra lateral
-2. Selecciona un archivo `.html` de marcadores
-3. El archivo se parseará automáticamente
-4. Los marcadores aparecerán en el editor
-5. Edita según necesites
+2. Selecciona un archivo `.html` de marcadores (de cualquier navegador)
+3. **El parser mejorado** analiza estructuras complejas automáticamente
+4. Los marcadores aparecen en **"Mis Marcadores"** para editar
+5. **Guarda como nueva lista**: Ve a "Mis Listas" → "Crear Nueva Lista"
+6. Los marcadores importados se guardan en tu nueva lista
+
+#### Mejoras del Parser
+- ✅ **Soporte robusto**: Maneja archivos grandes y complejos
+- ✅ **Múltiples métodos**: Diferentes algoritmos para máxima compatibilidad
+- ✅ **Sin pérdidas**: Importa toda la estructura jerárquica
+- ✅ **Navegadores múltiples**: Chrome, Firefox, Edge, Safari compatible
+- ✅ **Validación**: Reporta número de elementos importados
 
 #### Fuentes Compatibles
 - Archivos exportados desde BookmarkBuilder
@@ -288,6 +386,21 @@ El archivo generado sigue el estándar **Netscape Bookmark File Format**, compat
 ---
 
 ## Tips y Trucos
+
+### Gestión de Múltiples Listas *(Nuevo)*
+
+#### Estrategias de Organización
+- **Por Proyecto**: "Proyecto React", "App Móvil", "Cliente ABC"
+- **Por Rol**: "Frontend", "Backend", "DevOps", "Personal"  
+- **Por Estado**: "En Desarrollo", "Terminados", "Ideas Futuras"
+- **Por Tecnología**: "React + Node", "Python + Django", "AI/ML"
+
+#### Flujo de Trabajo Productivo
+1. **Comienza con plantillas** para tener base sólida
+2. **Duplica listas** antes de hacer cambios grandes
+3. **Renombra regularmente** para mantener claridad
+4. **Elimina listas obsoletas** para reducir desorden
+5. **Exporta listas importantes** como respaldo
 
 ### Organización Eficiente
 
