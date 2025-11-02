@@ -277,8 +277,14 @@ function App() {
     setSidebarOpen(false);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape' && sidebarOpen) {
+      closeSidebar();
+    }
+  };
+
   return (
-    <div className={`app ${darkMode ? 'dark' : ''}`}>
+    <div className={`app ${darkMode ? 'dark' : ''}`} onKeyDown={handleKeyDown}>
       {/* Hamburger menu button for mobile */}
       <button className="hamburger-btn" onClick={toggleSidebar} aria-label="Toggle menu">
         <span></span>
@@ -287,7 +293,7 @@ function App() {
       </button>
 
       {/* Overlay for mobile sidebar */}
-      {sidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
+      {sidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar} role="presentation" aria-hidden="true"></div>}
 
       <Sidebar
         activeView={activeView}
