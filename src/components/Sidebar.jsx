@@ -1,6 +1,6 @@
 import { FolderOpen, Layout, MessageSquare, Download, Moon, Sun, FileUp, List } from 'lucide-react';
 
-function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, toggleDarkMode }) {
+function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, toggleDarkMode, isOpen, onClose }) {
   const handleImport = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -18,6 +18,14 @@ function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, togg
     input.click();
   };
 
+  const handleNavClick = (viewId) => {
+    setActiveView(viewId);
+    // Close sidebar on mobile after navigation
+    if (onClose) {
+      onClose();
+    }
+  };
+
   const menuItems = [
     { id: 'templates', icon: <Layout size={20} />, label: 'Plantillas', color: 'blue' },
     { id: 'editor', icon: <FolderOpen size={20} />, label: 'Mis Marcadores', color: 'green' },
@@ -26,7 +34,7 @@ function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, togg
   ];
 
   return (
-    <aside className={`sidebar ${darkMode ? 'dark' : ''}`}>
+    <aside className={`sidebar ${darkMode ? 'dark' : ''} ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
         <h1 className="sidebar-title">📚 BookmarkBuilder</h1>
         <p className="sidebar-subtitle">Generador de Marcadores</p>
@@ -37,7 +45,7 @@ function Sidebar({ activeView, setActiveView, onExport, onImport, darkMode, togg
           <button
             key={item.id}
             className={`nav-item ${activeView === item.id ? 'active' : ''} ${item.color}`}
-            onClick={() => setActiveView(item.id)}
+            onClick={() => handleNavClick(item.id)}
           >
             {item.icon}
             <span>{item.label}</span>

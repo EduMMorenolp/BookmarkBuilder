@@ -12,6 +12,7 @@ function App() {
   const [bookmarks, setBookmarks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   // Sistema de múltiples listas de marcadores
   const [bookmarkLists, setBookmarkLists] = useState([]);
@@ -268,8 +269,26 @@ function App() {
     setDarkMode(!darkMode);
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className={`app ${darkMode ? 'dark' : ''}`}>
+      {/* Hamburger menu button for mobile */}
+      <button className="hamburger-btn" onClick={toggleSidebar} aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      {/* Overlay for mobile sidebar */}
+      {sidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
+
       <Sidebar
         activeView={activeView}
         setActiveView={setActiveView}
@@ -277,6 +296,8 @@ function App() {
         onImport={handleImport}
         darkMode={darkMode}
         toggleDarkMode={toggleDarkMode}
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
       />
 
       <main className="main-content">
