@@ -2,6 +2,8 @@
 
 Este archivo contiene scripts y comandos útiles para el desarrollo y mantenimiento del proyecto.
 
+**Versión actualizada**: v1.0.1 - Incluye nuevos scripts de deploy y testing.
+
 ## 📦 Scripts npm Disponibles
 
 ### Desarrollo
@@ -16,13 +18,19 @@ npm run dev -- --debug
 npm run dev -- --host
 ```
 
-### Build
+### Build y Deploy *(Actualizado v1.0.1)*
 ```bash
 # Crear build de producción
 npm run build
 
 # Preview del build (probar antes de deploy)
 npm run preview
+
+# Deploy a GitHub Pages (automático via GitHub Actions)
+npm run deploy
+
+# Build + Deploy manual
+npm run build && npm run deploy
 
 # Build + Preview en un solo comando
 npm run build && npm run preview

@@ -5,6 +5,63 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.0.1] - 2025-11-02
+
+### ✨ Añadido
+- **Sistema de Múltiples Listas de Marcadores**
+  - Componente `BookmarkListManager` para gestionar colecciones de marcadores
+  - Creación, eliminación, duplicación y renombrado de listas
+  - Navegación entre diferentes listas desde el sidebar ("Mis Listas")
+  - Persistencia de múltiples listas en localStorage
+  - Interfaz visual con tarjetas para cada lista
+  - Estado activo visual para la lista seleccionada
+
+- **Integración Mejorada de Plantillas con Listas**
+  - Las plantillas ahora crean automáticamente nuevas listas
+  - Redirección a "Mis Listas" al usar plantillas
+  - Cada plantilla genera una lista independiente y editable
+
+- **Banner Informativo en Chat IA**
+  - Advertencia visual de que está en fase de prueba
+  - Mensaje claro sobre la no conexión con modelo real
+  - Estilos adaptativos para modo claro y oscuro
+
+### 🔧 Arreglado
+- **Parser de Marcadores HTML Mejorado**
+  - Reescrito completamente el algoritmo de parsing en `bookmarkParser.js`
+  - Soporte para múltiples métodos de búsqueda de elementos DL anidados
+  - Manejo robusto de estructuras complejas de marcadores de diferentes navegadores
+  - Solución a problema donde solo se importaban 7 elementos de archivos grandes
+  - Mejor manejo de espacios en blanco y caracteres especiales en nombres
+
+- **Gestión de Estado Corregida**
+  - Eliminado bucle infinito en useEffect de actualización de listas
+  - Corrección de referencia circular en dependencies de React
+  - Solución a problema de keys duplicadas en renderizado de elementos
+
+- **Funcionalidad de Plantillas**
+  - Corregido acceso a `template.structure` en lugar de `template.bookmarks`
+  - Arreglado manejo de valores undefined en función `deepClone`
+  - Generación automática de IDs únicos para evitar conflictos
+
+- **Duplicación de Listas**
+  - Corregida función `duplicateList` para mantener contenido original
+  - Clonado profundo correcto de marcadores en duplicación
+  - Eliminada precarga no deseada de plantillas en nuevas listas
+
+### 🧹 Limpieza
+- Eliminación de todos los `console.log` de debugging
+- Optimización de efectos React para prevenir bucles infinitos
+- Mejora en la gestión de estado para múltiples listas
+- Validación de datos en función `deepClone` para valores null/undefined
+
+### 🎨 Interfaz
+- Nuevo icono y color naranja para "Mis Listas" en el sidebar
+- Botones de acción visibles en tarjetas de lista (70% opacidad por defecto)
+- Efectos hover mejorados en elementos interactivos
+- Grid responsivo para visualización de múltiples listas
+- Banner de advertencia estilizado para Chat IA con colores de alerta
+
 ## [1.0.0] - 2025-11-02
 
 ### 🎉 Lanzamiento Inicial

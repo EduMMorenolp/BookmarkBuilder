@@ -1,23 +1,45 @@
 # 🔧 Documentación Técnica - BookmarkBuilder
 
+## Versión Actual: 1.0.1
+
+### Cambios Principales v1.0.1
+- Sistema de múltiples listas de marcadores
+- Parser HTML mejorado con algoritmos robustos
+- Gestión de estado optimizada sin bucles infinitos
+- Integración plantillas → listas automática
+- Banner informativo para funciones en desarrollo
+
 ## Arquitectura del Proyecto
 
 ### Stack Tecnológico
 
 - **Frontend Framework**: React 18.3
 - **Build Tool**: Vite 5.4
-- **Gestión de Estado**: React Hooks (useState, useEffect)
-- **Persistencia**: localStorage API
+- **Gestión de Estado**: React Hooks (useState, useEffect) optimizado
+- **Persistencia**: localStorage API con validación
 - **Iconos**: Lucide React
 - **Estilos**: CSS Variables + CSS Modules approach
+- **Deploy**: GitHub Actions + GitHub Pages
 
 ### Estructura de Datos
+
+#### BookmarkList Schema *(Nuevo v1.0.1)*
+
+```javascript
+{
+  id: string,                    // Unique identifier
+  name: string,                  // Display name
+  bookmarks: Array<BookmarkItem>, // Array of bookmark items
+  created: string,               // ISO date string
+  lastModified: string          // ISO date string
+}
+```
 
 #### Bookmark Object Schema
 
 ```javascript
 {
-  id: string,              // Unique identifier
+  id: string,              // Unique identifier (auto-generated)
   type: 'folder' | 'link', // Item type
   name: string,            // Display name
   url?: string,            // Required for links
@@ -69,7 +91,7 @@
 **Props**:
 ```javascript
 {
-  activeView: string,           // 'templates' | 'editor' | 'chat'
+  activeView: string,           // 'templates' | 'editor' | 'lists' | 'chat'
   setActiveView: function,      // Cambiar vista activa
   onExport: function,           // Exportar marcadores
   onImport: function,           // Importar archivo HTML
@@ -83,6 +105,35 @@
 - Botón de importación con file picker
 - Botón de exportación
 - Toggle de tema oscuro/claro
+
+---
+
+### BookmarkListManager.jsx *(Nuevo v1.0.1)*
+
+**Propósito**: Gestión completa de múltiples listas de marcadores
+
+**Props**:
+```javascript
+{
+  bookmarkLists: Array<BookmarkList>, // Array de listas
+  activeListId: string,               // ID de lista activa
+  onCreateList: function,             // Crear nueva lista
+  onLoadList: function,               // Cargar lista en editor
+  onDeleteList: function,             // Eliminar lista
+  onDuplicateList: function,          // Duplicar lista
+  onRenameList: function,             // Renombrar lista
+  onExportList: function,             // Exportar lista específica
+  currentBookmarks: Array,            // Marcadores actuales
+  onSaveCurrentList: function         // Guardar lista actual
+}
+```
+
+**Funcionalidades**:
+- Vista en grid de todas las listas
+- Diálogos para crear/renombrar listas
+- Botones de acción por lista (cargar, duplicar, renombrar, eliminar, exportar)
+- Estado visual de lista activa
+- Gestión de estados de edición inline
 
 ---
 
@@ -199,7 +250,7 @@ addRootItem(type)
 
 ## Utilidades
 
-### bookmarkParser.js
+### bookmarkParser.js *(Mejorado v1.0.1)*
 
 **Funciones Principales**:
 
@@ -218,20 +269,40 @@ Convierte estructura JSON a HTML Netscape
 3. Genera tags HTML según tipo (H3 para folders, A para links)
 4. Respeta indentación para legibilidad
 
-#### `htmlToJson(htmlString)`
-Parsea HTML Netscape a estructura JSON
+#### `htmlToJson(htmlString)` *(Reescrito)*
+Parsea HTML Netscape a estructura JSON con algoritmo robusto
 
 **Parámetros**:
 - `htmlString`: Contenido del archivo HTML
 
 **Retorna**: Array de bookmarks
 
-**Proceso**:
-1. Crea DOMParser
-2. Encuentra tag `<DL>` raíz
-3. Recorre recursivamente nodos
-4. Identifica H3 (folders) y A (links)
-5. Construye estructura JSON con IDs generados
+**Proceso Mejorado**:
+1. Crea DOMParser con validación de errores
+2. **Múltiples métodos de búsqueda** para encontrar elementos DL
+3. **Algoritmo recursivo robusto** para estructuras complejas
+4. **Limpieza de texto** para caracteres especiales
+5. **Validación de elementos** antes de procesamiento
+6. Construcción de estructura JSON con IDs únicos generados
+
+**Mejoras**:
+- ✅ Soporte para archivos grandes y complejos
+- ✅ Múltiples fallbacks para diferentes formatos
+- ✅ Mejor manejo de errores
+- ✅ Compatibilidad extendida entre navegadores
+
+#### `deepClone(obj)` *(Mejorado)*
+Clona estructuras profundas con validación
+
+**Parámetros**:
+- `obj`: Objeto a clonar
+
+**Retorna**: Copia profunda con IDs únicos
+
+**Mejoras**:
+- ✅ Validación de valores null/undefined
+- ✅ Generación automática de IDs únicos
+- ✅ Prevención de conflictos de keys duplicadas
 
 #### `generateFilename()`
 Genera nombre de archivo con timestamp
@@ -347,28 +418,74 @@ newcategory: {
 
 ---
 
-## Gestión de Estado
+## Gestión de Estado *(Optimizado v1.0.1)*
 
 ### Estado Global (App.jsx)
 
 ```javascript
+// Estados existentes
 const [activeView, setActiveView] = useState('templates')
 const [bookmarks, setBookmarks] = useState([])
 const [darkMode, setDarkMode] = useState(false)
 const [notification, setNotification] = useState(null)
+
+// Nuevos estados v1.0.1
+const [bookmarkLists, setBookmarkLists] = useState([])
+const [activeListId, setActiveListId] = useState(null)
 ```
 
-### Persistencia
+### Optimizaciones de Estado
+
+#### Prevención de Bucles Infinitos
+```javascript
+// ❌ ANTES (causaba bucle infinito)
+useEffect(() => {
+  if (activeListId && bookmarkLists.length > 0) {
+    setBookmarkLists(updatedLists); // Causaba re-render infinito
+  }
+}, [bookmarks, activeListId, bookmarkLists]); // bookmarkLists en deps
+
+// ✅ DESPUÉS (optimizado)
+useEffect(() => {
+  if (activeListId) {
+    setBookmarkLists(prevLists => { // Usa función para evitar dependencia
+      const updatedLists = prevLists.map(list => 
+        list.id === activeListId 
+          ? { ...list, bookmarks: bookmarks }
+          : list
+      );
+      return updatedLists;
+    });
+  }
+}, [bookmarks, activeListId]); // Sin bookmarkLists en deps
+```
+
+### Persistencia *(Expandida v1.0.1)*
 
 #### Guardar en localStorage
 
 ```javascript
+// Marcadores actuales
 useEffect(() => {
   localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
 }, [bookmarks])
 
+// Listas de marcadores
+useEffect(() => {
+  localStorage.setItem('bookmarkLists', JSON.stringify(bookmarkLists))
+}, [bookmarkLists])
+
+// Lista activa
+useEffect(() => {
+  if (activeListId) {
+    localStorage.setItem('activeListId', activeListId)
+  }
+}, [activeListId])
+
+// Tema
 useEffect(() => {
   localStorage.setItem('darkMode', darkMode.toString())
+  document.body.classList.toggle('dark-mode', darkMode)
 }, [darkMode])
 ```
 
