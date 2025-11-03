@@ -4,6 +4,7 @@ import TemplateSelector from './components/TemplateSelector';
 import Editor from './components/Editor';
 import ChatIA from './components/ChatIA';
 import BookmarkListManager from './components/BookmarkListManager';
+import Tutorial from './components/Tutorial';
 import { jsonToHtml, htmlToJson, generateFilename, downloadHtml, deepClone } from './utils/bookmarkParser';
 import './App.css';
 
@@ -17,6 +18,9 @@ function App() {
   // Sistema de múltiples listas de marcadores
   const [bookmarkLists, setBookmarkLists] = useState([]);
   const [activeListId, setActiveListId] = useState(null);
+
+  // Tutorial interactivo
+  const [showTutorial, setShowTutorial] = useState(false);
 
   // Cargar estado desde localStorage
   useEffect(() => {
@@ -53,6 +57,12 @@ function App() {
     
     if (savedDarkMode) {
       setDarkMode(savedDarkMode === 'true');
+    }
+
+    // Verificar si debe mostrar el tutorial
+    const tutorialCompleted = localStorage.getItem('tutorialCompleted');
+    if (!tutorialCompleted) {
+      setTimeout(() => setShowTutorial(true), 1500); // Delay para mejor UX
     }
   }, []);
 
@@ -95,6 +105,20 @@ function App() {
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 3000);
+  };
+
+  // Funciones del tutorial
+  const startTutorial = () => {
+    setShowTutorial(true);
+  };
+
+  const closeTutorial = () => {
+    setShowTutorial(false);
+  };
+
+  const completeTutorial = () => {
+    setShowTutorial(false);
+    showNotification('¡Tutorial completado! Ya puedes organizar tus marcadores como un profesional 🎉');
   };
 
   // Crear nueva lista de marcadores
@@ -349,6 +373,25 @@ function App() {
         <div className={`notification ${notification.type}`}>
           {notification.message}
         </div>
+      )}
+
+      {/* Tutorial interactivo */}
+      <Tutorial
+        isOpen={showTutorial}
+        onClose={closeTutorial}
+        onComplete={completeTutorial}
+      />
+
+      {/* Botón de ayuda flotante */}
+      {!showTutorial && (
+        <button
+          className="tutorial-help-button"
+          onClick={startTutorial}
+          title="Iniciar tutorial"
+          aria-label="Abrir tutorial interactivo"
+        >
+          <span style={{fontSize: '20px', fontWeight: 'bold'}}>?</span>
+        </button>
       )}
     </div>
   );
