@@ -5,6 +5,34 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.0.2] - 2025-11-02
+
+### ✨ Añadido
+- **Sistema de Tutorial Interactivo para Nuevos Usuarios**
+  - Tutorial paso a paso de 7 etapas guiando a través de todas las funcionalidades
+  - Modal con navegación intuitiva (botones Anterior/Siguiente)
+  - Indicadores visuales de progreso con números y estados completados
+  - Tooltips informativos mostrando el título de cada paso
+  - Botón de ayuda flotante para acceder al tutorial en cualquier momento
+  - Destacado automático de elementos durante la guía
+  - Persistencia del estado de completado en localStorage
+
+### 🎨 Mejorado
+- **Experiencia de Usuario del Tutorial**
+  - Diseño responsive optimizado para diferentes tamaños de pantalla
+  - Animaciones suaves de entrada y transición entre pasos
+  - Colores contrastantes para mejor accesibilidad visual
+  - Modal con dimensiones optimizadas (450px máximo, 380px mínimo)
+  - Navegación que se mantiene siempre dentro de los límites del modal
+  - Botones más compactos con mejor distribución del espacio
+
+### 🔧 Arreglado
+- **Layout y Estilos del Tutorial**
+  - Solucionado el problema de botones que se salían del modal
+  - Mejorado el contraste del texto blanco en botones primarios
+  - Ajustado el espaciado interno para mejor presentación
+  - Corregida la visualización de estados activos y completados en indicadores
+
 ## [1.0.1] - 2025-11-02
 
 ### ✨ Añadido

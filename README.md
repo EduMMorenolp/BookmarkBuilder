@@ -14,13 +14,21 @@
 
 ### ✨ Funcionalidades Principales
 
-- **� Sistema de Múltiples Listas**
+- **🎓 Tutorial Interactivo para Nuevos Usuarios**
+  - Guía paso a paso de 7 etapas cubriendo todas las funcionalidades
+  - Navegación intuitiva con indicadores de progreso numerados
+  - Destacado automático de elementos durante la explicación
+  - Tooltips informativos y feedback visual claro
+  - Botón de ayuda flotante accesible en cualquier momento
+  - Diseño responsive optimizado para todos los dispositivos
+
+- **📚 Sistema de Múltiples Listas**
   - Crea y gestiona múltiples colecciones de marcadores
   - Duplica, renombra y elimina listas fácilmente
   - Navegación intuitiva entre diferentes proyectos
   - Persistencia automática de todas tus listas
 
-- **�📁 Plantillas Predefinidas**: 6 plantillas profesionales listas para usar
+- **📁 Plantillas Predefinidas**: 6 plantillas profesionales listas para usar
   - 🚀 Full Stack Developer
   - 🎨 Frontend Developer
   - ⚙️ Backend Developer
@@ -81,6 +89,18 @@ npm run dev
 La aplicación estará disponible en `http://localhost:5173`
 
 ## 📖 Uso
+
+### 0. Tutorial Interactivo (Recomendado para nuevos usuarios)
+
+🎓 **¡Comienza con el tutorial!** - Al abrir la aplicación por primera vez, encontrarás:
+
+- **Tutorial automático** que te guía paso a paso por todas las funcionalidades
+- **Botón de ayuda flotante** (icono de interrogación) en la esquina inferior derecha
+- **7 pasos interactivos** que cubren desde las plantillas hasta la exportación
+- **Indicadores de progreso** numerados para seguir tu avance
+- **Navegación intuitiva** con botones Anterior/Siguiente
+
+El tutorial es **completamente opcional** - puedes saltarlo o acceder a él en cualquier momento haciendo clic en el botón de ayuda.
 
 ### 1. Crear Lista desde Plantilla
 
@@ -255,6 +275,11 @@ Una vez configurado, tu proyecto estará disponible en:
 
 ##  Futuras Mejoras
 
+### ✅ Implementado en v1.0.2
+- [x] **Tutorial interactivo**: Sistema completo de guía paso a paso para nuevos usuarios
+- [x] **Experiencia de usuario mejorada**: Modal responsive con navegación optimizada
+- [x] **Indicadores de progreso**: Seguimiento visual del avance en el tutorial
+
 ### ✅ Implementado en v1.0.1
 - [x] **Múltiples listas de marcadores**: Sistema completo de gestión de colecciones
 - [x] **Parser HTML mejorado**: Soporte robusto para importación de estructuras complejas
@@ -276,7 +301,6 @@ Una vez configurado, tu proyecto estará disponible en:
 - [ ] Importación desde servicios (Pocket, Raindrop.io)
 - [ ] Temas personalizables
 - [ ] Atajos de teclado
-- [ ] Tutorial interactivo
 
 ## 📝 Licencia
 
