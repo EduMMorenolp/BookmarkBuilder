@@ -1,0 +1,270 @@
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* ===== TABLET & MOBILE ===== */
+@media (max-width: 768px) {
+  /* Hamburger Menu */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    height: 100%;
+    transition: left 0.3s;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  /* Main Content */
+  .main-content {
+    padding: 16px;
+    padding-top: 76px; /* Add space for hamburger button */
+  }
+  
+  /* Template Grid */
+  .template-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Editor Header */
+  .editor-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  /* Chat IA Mobile Styles */
+  .chat-ia {
+    height: calc(100vh - 80px);
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .chat-header {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .chat-header h2 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .chat-subtitle {
+    font-size: 13px;
+  }
+
+  .beta-banner {
+    padding: 12px;
+    margin-bottom: 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .beta-content h3 {
+    font-size: 15px;
+  }
+
+  .beta-content p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .chat-messages {
+    padding: 16px;
+    margin-bottom: 12px;
+    height: auto;
+    min-height: 300px;
+    max-height: 50vh;
+  }
+
+  .message {
+    gap: 8px;
+  }
+
+  .message-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .message-content {
+    max-width: 85%;
+    padding: 10px 12px;
+  }
+
+  .message-content p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .suggestion-box {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .apply-btn {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+
+  .chat-input-container {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .chat-input {
+    padding: 14px 16px;
+    font-size: 16px; /* Evita zoom en iOS */
+    border-radius: var(--radius);
+  }
+
+  .send-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius);
+    flex-shrink: 0;
+  }
+
+  .chat-suggestions {
+    padding: 12px;
+  }
+
+  .suggestions-title {
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .quick-buttons {
+    gap: 6px;
+  }
+
+  .quick-buttons button {
+    padding: 10px 12px;
+    font-size: 12px;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+  }
+
+  /* Mejorar diálogos en móvil */
+  .dialog {
+    min-width: 90vw;
+    max-width: 90vw;
+    margin: 0 16px;
+    padding: 20px;
+  }
+
+  .dialog h3 {
+    font-size: 16px;
+  }
+
+  .dialog input {
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+
+  .dialog-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dialog-buttons button {
+    width: 100%;
+  }
+
+  /* Lista de marcadores en móvil */
+  .lists-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .list-card {
+    padding: 16px;
+  }
+
+  .list-header h3 {
+    font-size: 16px;
+  }
+
+  .list-actions {
+    opacity: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .manager-header {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .manager-header h2 {
+    font-size: 24px;
+  }
+}
+
+/* ===== EXTRA SMALL MOBILE ===== */
+@media (max-width: 480px) {
+  .chat-ia {
+    padding: 0 4px;
+  }
+
+  .chat-header h2 {
+    font-size: 20px;
+  }
+
+  .chat-messages {
+    padding: 12px;
+    min-height: 250px;
+    max-height: 45vh;
+  }
+
+  .message-content {
+    max-width: 90%;
+    padding: 8px 10px;
+  }
+
+  .message-content p {
+    font-size: 12px;
+  }
+
+  .chat-input {
+    padding: 12px 14px;
+  }
+
+  .send-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .quick-buttons {
+    flex-direction: column;
+  }
+
+  .quick-buttons button {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .beta-banner {
+    padding: 10px;
+  }
+
+  .beta-content h3 {
+    font-size: 14px;
+  }
+
+  .beta-content p {
+    font-size: 12px;
+  }
+}

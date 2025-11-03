@@ -34,6 +34,14 @@ function ChatIA({ onApplySuggestion }) {
     }
 
     setInput('');
+
+    // Hacer scroll al final en dispositivos móviles
+    setTimeout(() => {
+      const chatMessages = document.querySelector('.chat-messages');
+      if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }, 100);
   };
 
   const handleApply = () => {

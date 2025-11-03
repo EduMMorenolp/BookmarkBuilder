@@ -1,0 +1,129 @@
+/* ===== TEMPLATE SELECTOR ===== */
+.template-selector {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.template-header {
+  margin-bottom: 32px;
+}
+
+.template-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.template-header p {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+/* ===== TEMPLATE GRID ===== */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* ===== TEMPLATE CARD ===== */
+.template-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: all 0.3s;
+  box-shadow: var(--shadow);
+}
+
+.template-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.template-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.template-card-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.template-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: white;
+  border-radius: var(--radius);
+  font-size: 20px;
+}
+
+.template-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ===== TEMPLATE PREVIEW ===== */
+.template-preview {
+  margin-bottom: 16px;
+}
+
+.preview-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.template-preview ul {
+  list-style: none;
+}
+
+.template-preview li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.template-preview li svg {
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+.more-items {
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin-left: 22px;
+}
+
+.template-btn {
+  width: 100%;
+  padding: 10px 20px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.template-btn:hover {
+  background: #2563eb;
+  transform: scale(1.02);
+}

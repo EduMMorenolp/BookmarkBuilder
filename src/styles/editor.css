@@ -1,0 +1,267 @@
+/* ===== EDITOR ===== */
+.editor {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.editor-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ===== EDITOR ACTIONS ===== */
+.editor-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-btn.folder {
+  background: var(--color-primary);
+  color: white;
+}
+
+.add-btn.link {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.add-btn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== EDITOR CONTENT ===== */
+.editor-content {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  min-height: 500px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.empty-hint {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+/* ===== BOOKMARKS TREE ===== */
+.bookmarks-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ===== FOLDER ITEM ===== */
+.folder-item {
+  border-radius: var(--radius);
+  padding: 8px;
+  transition: background 0.2s;
+}
+
+.folder-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.expand-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* ===== ITEM ICONS ===== */
+.item-icon {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.folder-icon {
+  color: #f59e0b;
+}
+
+.link-icon {
+  color: var(--color-primary);
+}
+
+/* ===== ITEM CONTENT ===== */
+.item-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.item-name.link {
+  color: var(--color-primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item-name.link:hover {
+  text-decoration: underline;
+}
+
+.item-url {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-left: auto;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== ITEM ACTIONS ===== */
+.item-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.folder-item:hover .item-actions {
+  opacity: 1;
+}
+
+.action-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.action-icon:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.action-icon.delete:hover {
+  background: var(--color-danger);
+  color: white;
+}
+
+/* ===== FOLDER STRUCTURE ===== */
+.folder-children {
+  margin-left: 24px;
+  margin-top: 4px;
+  border-left: 2px solid var(--border-color);
+  padding-left: 8px;
+}
+
+.link-item {
+  padding: 8px 12px;
+}
+
+/* ===== EDIT FORM ===== */
+.folder-item.editing {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--color-primary);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.edit-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-save,
+.btn-cancel {
+  padding: 6px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save {
+  background: var(--color-success);
+  color: white;
+}
+
+.btn-cancel {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.btn-save:hover,
+.btn-cancel:hover {
+  transform: scale(1.05);
+}
